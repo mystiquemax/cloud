@@ -113,7 +113,7 @@ def create_book():
     collection.insert_one(book)
     return make_response({"message": "Book created successfully."}, 201)
 
-@app.route("/api/books/<string:book_id>", methods=["UPDATE"])
+@app.route("/api/books/<string:book_id>", methods=["UPDATE", "PUT"])
 def update_book(book_id):
     data = request.get_json()
 
