@@ -51,12 +51,12 @@ def find_all_books():
     books = collection.find()
     return [
         {
-            "ID": str(book.get("ID")),
-            "BookName": book.get("BookName"),
-            "BookAuthor": book.get("BookAuthor"),
-            "BookEdition": book.get("BookEdition"),
-            "BookPages": book.get("BookPages"),
-            "BookYear": book.get("BookYear")
+            "id": str(book.get("ID", "")),
+            "title": book.get("BookName", ""),
+            "author": book.get("BookAuthor", ""),
+            "edition": book.get("BookEdition", ""),
+            "pages": book.get("BookPages", ""),
+            "year": book.get("BookYear", "")
         }
         for book in books
     ]
@@ -113,7 +113,7 @@ def create_book():
     collection.insert_one(book)
     return make_response({"message": "Book created successfully."}, 201)
 
-@app.route("/api/books/<string:book_id>", methods=["UPDATE", "PUT"])
+@app.route("/api/books/<string:book_id>", methods=["UPDATE"])
 def update_book(book_id):
     data = request.get_json()
 
