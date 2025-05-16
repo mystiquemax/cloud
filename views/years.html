@@ -1,0 +1,31 @@
+<div class="years-section">
+  <h2>Publication Years</h2>
+  {% if years %}
+    <ul class="years-list">
+      {% for year in years %}
+        <li>{{ year }}</li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p>No publication years found.</p>
+  {% endif %}
+</div>
+
+<style>
+  .years-section {
+    padding: 1rem;
+    font-family: 'Inconsolata', monospace;
+  }
+
+  .years-list {
+    list-style-type: none;
+    padding: 0;
+  }
+
+  .years-list li {
+    background: #f4f4f4;
+    margin: 0.5rem 0;
+    padding: 0.5rem;
+    border-radius: 6px;
+  }
+</style>
