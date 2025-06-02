@@ -8,7 +8,7 @@ template_dir = os.path.join(base_dir, 'views')
 app = Flask(__name__, template_folder=template_dir)
 
 # MongoDB Setup
-client = MongoClient("mongodb://localhost:27017")
+client = MongoClient(os.getenv("MONGODB_URI", "mongodb://mongodb:27017/exercise-1"))
 db = client["exercise-1"]
 collection = db["information"]
 
