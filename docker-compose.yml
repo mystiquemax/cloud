@@ -4,6 +4,7 @@ services:
   mongodb:
     image: mongo:6
     container_name: mongo
+    #platform: linux/amd64
     restart: always
     ports:
       - "27017:27017"
@@ -14,9 +15,10 @@ services:
     image: maksimkata123/flask_app:latest
     build:
       context: .
-      dockerfile: Dockerfile
-      args:
-        - TARGETARCH=amd64
+      #dockerfile: Dockerfile
+      #platform: linux/amd64
+      #args:
+      #  - TARGETARCH=amd64
     container_name: flask_app
     restart: always
     ports:
