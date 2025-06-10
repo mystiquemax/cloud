@@ -1,16 +1,47 @@
 from flask import Flask, render_template, jsonify, request, make_response, abort
 from pymongo import MongoClient
 import os
+import time
+from pymongo.errors import ServerSelectionTimeoutError
 
 base_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 template_dir = os.path.join(base_dir, 'views')
 
 app = Flask(__name__, template_folder=template_dir)
 
-# MongoDB Setup
-client = MongoClient(os.getenv("DATABASE_URI"))
+client = None
+max_retries = 10 # Maximum number of connection attempts
+retry_delay_seconds = 5 # Seconds to wait between attempts
+
+for i in range(max_retries):
+    try:
+        # MongoDB Setup
+        mongo_uri = os.getenv("DATABASE_URI")
+        if not mongo_uri:
+            raise RuntimeError("DATABASE_URI environment variable is not set")
+
+        print(f"Attempting to connect to MongoDB ({i+1}/{max_retries})...")
+        client = MongoClient(mongo_uri, serverSelectionTimeoutMS=5000) # Shorten serverSelectionTimeoutMS for quicker retries
+        # The ismaster command is cheap and does not require auth.
+        client.admin.command('ismaster')
+        print("MongoDB connection successful!")
+        break # Connection successful, exit loop
+    except ServerSelectionTimeoutError as err:
+        print(f"MongoDB connection failed: {err}")
+        if i < max_retries - 1:
+            print(f"Retrying in {retry_delay_seconds} seconds...")
+            time.sleep(retry_delay_seconds)
+        else:
+            print("Max retries reached. Could not connect to MongoDB.")
+            raise # Re-raise the exception if max retries are exhausted
+    except RuntimeError as err:
+        print(f"Configuration error: {err}")
+        raise # Re-raise immediately if DATABASE_URI is not set
+
 if not client:
-    raise RuntimeError("DATABASE_URI environment variable is not set")
+    # This block should ideally not be reached if RuntimeError is raised,
+    # but good for safety.
+    raise RuntimeError("Failed to connect to MongoDB after multiple retries.")
 db = client.get_default_database()
 collection = db["information"]
 
