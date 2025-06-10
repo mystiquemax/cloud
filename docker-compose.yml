@@ -2,12 +2,11 @@
 
 services:
   mongodb:
-    image: mongo:6
+    image: mongo:latest
     container_name: mongo
     #platform: linux/amd64
     restart: always
-    ports:
-      - "27017:27017"
+
     volumes:
       - mongo_data:/data/db
 
