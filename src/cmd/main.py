@@ -9,8 +9,8 @@ app = Flask(__name__, template_folder=template_dir)
 
 # MongoDB Setup
 client = MongoClient(
-    os.getenv("DATABASE_URI")
-    #"mongodb://mongodb:27017/exercise-1"
+    #os.getenv("DATABASE_URI")
+    "mongodb://mongodb:27017/exercise-1"
     )
 if not client:
     raise RuntimeError("DATABASE_URI environment variable is not set")
