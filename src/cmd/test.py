@@ -257,7 +257,7 @@ def delete_book(book_id):
 # --- Main Application Logic ---
 if __name__ == "__main__":
     # Get MongoDB URI from environment variable
-    uri = os.getenv("DATABASE_URI")
+    uri = os.getenv("DATABASE_URI", "mongodb://localhost:27017/exercise-1")
     if not uri:
         print("failure to load env variable: DATABASE_URI environment variable is not set", file=sys.stderr)
         sys.exit(1)
