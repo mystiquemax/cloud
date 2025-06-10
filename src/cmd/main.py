@@ -8,9 +8,9 @@ template_dir = os.path.join(base_dir, 'views')
 app = Flask(__name__, template_folder=template_dir)
 
 # MongoDB Setup
-client = MongoClient(os.getenv("MONGODB_URI"))
+client = MongoClient(os.getenv("DATABASE_URI"))
 if not client:
-    raise RuntimeError("MONGODB_URI environment variable is not set")
+    raise RuntimeError("DATABASE_URI environment variable is not set")
 db = client.get_default_database()
 collection = db["information"]
 

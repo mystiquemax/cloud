@@ -1,4 +1,4 @@
-version: "3.9"
+#version: "3.9"
 
 services:
   mongodb:
@@ -15,7 +15,7 @@ services:
     image: maksimkata123/flask_app:latest
     build:
       context: .
-      #dockerfile: Dockerfile
+      dockerfile: Dockerfile
       #platform: linux/amd64
       #args:
       #  - TARGETARCH=amd64
@@ -24,7 +24,7 @@ services:
     ports:
       - "3030:3030"
     environment:
-      - MONGODB_URI=mongodb://mongodb:27017/exercise-1
+      - DATABASE_URI=mongodb://mongodb:27017/exercise-1
     depends_on:
       - mongodb
 
