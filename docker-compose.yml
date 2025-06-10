@@ -1,12 +1,8 @@
-#version: "3.9"
-
 services:
   mongodb:
     image: mongo:latest
     container_name: mongo
-    #platform: linux/amd64
     restart: always
-
     volumes:
       - mongo_data:/data/db
 
@@ -15,9 +11,6 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-      #platform: linux/amd64
-      #args:
-      #  - TARGETARCH=amd64
     container_name: flask_app
     restart: always
     ports:
@@ -26,6 +19,5 @@ services:
       - DATABASE_URI=mongodb://mongodb:27017/exercise-1
     depends_on:
       - mongodb
-
 volumes:
   mongo_data:
