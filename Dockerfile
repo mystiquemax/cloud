@@ -12,4 +12,4 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 EXPOSE 3030
 
-CMD ["python", "cmd/main.py"]
+CMD ["python", "cmd/test.py"]

@@ -7,7 +7,7 @@ services:
       - mongo_data:/data/db
 
   app:
-    image: maksimkata123/flask_app:latest
+    image: maksimkata123/flask_app_test:latest
     build:
       context: .
       dockerfile: Dockerfile
